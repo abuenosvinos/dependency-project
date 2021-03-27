@@ -1,0 +1,41 @@
+version: "3"
+services:
+    php80:
+        build: ./docker/php80/
+        ports:
+            - 9001:9000
+        links:
+            - database
+        volumes:
+            - .:/app
+        environment:
+            PHP_IDE_CONFIG: "serverName=DockerEnv"
+        networks:
+            dependencyprojectnet:
+                ipv4_address: 172.27.0.2
+        extra_hosts:
+            - "database.service:172.27.0.100"
+            - "host.docker.internal:${HOST_DOCKER}"
+
+    database:
+        build: ./docker/database/
+        ports:
+            - 3307:3306
+        volumes:
+            - ../var/database/dbdata:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_DATABASE: database
+            MYSQL_USER: devel
+            MYSQL_PASSWORD: devel
+        command: --sql_mode="STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+        networks:
+            dependencyprojectnet:
+                ipv4_address: 172.27.0.100
+
+networks:
+    dependencyprojectnet:
+        driver: bridge
+        ipam:
+            config:
+            - subnet: 172.27.0.0/24
