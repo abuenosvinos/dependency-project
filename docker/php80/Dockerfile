@@ -7,9 +7,10 @@ RUN buildDeps=" \
     runtimeDeps=" \
         git \
         unzip \
+        libonig-dev \
     " \
     && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y $buildDeps $runtimeDeps \
-    && docker-php-ext-install mysqli \
+    && docker-php-ext-install mysqli iconv mbstring pdo_mysql \
     && apt-get purge -y --auto-remove $buildDeps \
     && rm -r /var/lib/apt/lists/*
 

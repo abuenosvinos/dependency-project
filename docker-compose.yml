@@ -2,6 +2,7 @@ version: "3"
 services:
     php80:
         build: ./docker/php80/
+        container_name: dependencyproject_php80
         ports:
             - 9001:9000
         links:
@@ -19,6 +20,7 @@ services:
 
     database:
         build: ./docker/database/
+        container_name: dependencyproject_database
         ports:
             - 3307:3306
         volumes:
