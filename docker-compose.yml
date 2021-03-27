@@ -24,7 +24,7 @@ services:
         ports:
             - 3307:3306
         volumes:
-            - ../var/database/dbdata:/var/lib/mysql
+            - ./var/database/dbdata:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: secret
             MYSQL_DATABASE: database
