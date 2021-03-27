@@ -11,7 +11,7 @@ Instalation of dependencies
 docker exec -w /app  dependencyproject_php80 composer install
 ```
 
-Creation of tables
+Creation of tables (You have to wait until mysql is operative)
 ```
 docker exec -w /app dependencyproject_php80 php bin/console doctrine:schema:update --force
 ```
