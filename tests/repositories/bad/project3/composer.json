@@ -1,0 +1,7 @@
+{
+    "require": {
+        "library1": "5.2.*",
+        "library3": "5.2.*",
+        "vendor3": "5.2.*"
+    }
+}

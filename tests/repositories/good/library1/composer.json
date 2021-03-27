@@ -1,0 +1,6 @@
+{
+    "name": "libreriauno",
+    "require": {
+        "library7": "4.2.*"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "name": "proyectodos",
+    "require": {
+        "library1": "5.2.*",
+        "library5": "5.1.*",
+        "vendor3": "5.2.*",
+        "vendor5": "5.2.*"
+    }
+}
