@@ -16,5 +16,6 @@
 ###< symfony/phpunit-bridge ###
 
 ###< propio ###
+/.idea/
 NOTAS
 ###< propio ###

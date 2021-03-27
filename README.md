@@ -11,7 +11,7 @@ docker run --rm -v $(pwd):/app -w /app  dependencyproject_php80 composer install
 
 ## Test
 ```
-docker run --rm -v $(pwd):/app -w /app  dependencyproject_php80 ./vendor/bin/simple-phpunit
+docker exec -w /app  dependencyproject_php80 ./vendor/bin/simple-phpunit
 ```
 
 ## Execution

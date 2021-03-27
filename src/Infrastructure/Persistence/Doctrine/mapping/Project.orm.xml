@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Entity\Project" table="project">
+
+        <unique-constraints>
+            <unique-constraint name="project_path_idx" columns="path" />
+            <unique-constraint name="project_name_version_idx" columns="name,version" />
+            <unique-constraint name="project_id_idx" columns="id" />
+        </unique-constraints>
+
+        <id name="id" type="string" column="id" length="36" />
+        <field name="path" type="string" column="path" length="255" />
+        <field name="name" type="string" column="name" length="255" />
+        <field name="version" type="string" column="version" length="255" />
+
+        <many-to-many field="sons" inversed-by="parents" target-entity="App\Domain\Entity\Project">
+            <join-table name="project_dependencies">
+                <join-columns>
+                    <join-column name="parent" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="son" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+
+        <many-to-many field="parents" mapped-by="sons" target-entity="App\Domain\Entity\Project"/>
+
+    </entity>
+</doctrine-mapping>
