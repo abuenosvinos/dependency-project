@@ -1,8 +1,8 @@
 {
     "name": "libreriatres",
     "require": {
-        "library5": "5.2.*",
-        "library7": "5.2.*",
-        "vendor25": "5.2.*"
+        "libreriacinco": "5.2.*",
+        "libreriasiete": "5.2.*",
+        "vendornueve": "5.2.*"
     }
 }

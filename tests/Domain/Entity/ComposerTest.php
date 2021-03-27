@@ -28,9 +28,8 @@ class ComposerTest extends KernelTestCase
     public function testExistsAndValid()
     {
         $finalPath = $this->path_repositories . 'esteesbueno';
-        $repo = Repo::fromPrimitives($finalPath);
 
-        $composer = Composer::fromRepo($repo);
+        $composer = Composer::fromPath($finalPath);
 
         $this->assertEquals('siquesoybueno', $composer->name());
     }
@@ -40,9 +39,8 @@ class ComposerTest extends KernelTestCase
         $this->expectException(ComposerNotExistsException::class);
 
         $finalPath = $this->path_repositories . 'project1';
-        $repo = Repo::fromPrimitives($finalPath);
 
-        Composer::fromRepo($repo);
+        Composer::fromPath($finalPath);
     }
 
     public function testNotValidJson()
@@ -50,9 +48,8 @@ class ComposerTest extends KernelTestCase
         $this->expectException(ComposerNotValidJsonException::class);
 
         $finalPath = $this->path_repositories . 'project2';
-        $repo = Repo::fromPrimitives($finalPath);
 
-        Composer::fromRepo($repo);
+        Composer::fromPath($finalPath);
     }
 
 
@@ -61,8 +58,7 @@ class ComposerTest extends KernelTestCase
         $this->expectException(ComposerNotHasNameException::class);
 
         $finalPath = $this->path_repositories . 'project3';
-        $repo = Repo::fromPrimitives($finalPath);
 
-        $composer = Composer::fromRepo($repo);
+        $composer = Composer::fromPath($finalPath);
     }
 }

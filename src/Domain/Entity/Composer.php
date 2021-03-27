@@ -8,27 +8,25 @@ use App\Domain\ComposerNotValidJsonException;
 
 class Composer
 {
-    private Repo $repo;
     private array $data;
 
-    private function __construct(Repo $repo)
+    private function __construct(string $path)
     {
-        $file = $repo->path() . '/composer.json';
+        $file = $path . '/composer.json';
         if (!file_exists($file)) {
-            throw new ComposerNotExistsException($repo->path());
+            throw new ComposerNotExistsException($file);
         }
 
         $data = json_decode(file_get_contents($file), true);
         if (!is_array($data)) {
-            throw new ComposerNotValidJsonException($repo->path());
+            throw new ComposerNotValidJsonException($file);
         }
 
         if (!isset($data['name'])) {
-            throw new ComposerNotHasNameException($repo->path());
+            throw new ComposerNotHasNameException($file);
         }
 
         $this->data = $data;
-        $this->repo = $repo;
     }
 
     public function name(): string
@@ -36,8 +34,13 @@ class Composer
         return $this->data['name'];
     }
 
-    public static function fromRepo(Repo $repo)
+    public function require(): array
     {
-        return new self($repo);
+        return (isset($this->data['require'])) ? $this->data['require'] : [];
+    }
+
+    public static function fromPath(string $path)
+    {
+        return new self($path);
     }
 }

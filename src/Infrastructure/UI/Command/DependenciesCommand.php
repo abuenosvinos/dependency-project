@@ -7,7 +7,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class DependenciesCommand extends Command
 {
@@ -53,6 +55,14 @@ class DependenciesCommand extends Command
         $this->queryBus->dispatch(new \App\Application\Dependencies\DependenciesQuery());
 
         return Command::SUCCESS;
+    }
+
+    // TODO; Habría que Encapsular el symfony/messenger con clases propias
+    private function processEnvelope(Envelope $envelope)
+    {
+        /** @var HandledStamp $stamp */
+        $stamp = $envelope->last(HandledStamp::class);
+        return $stamp->getResult();
     }
 
     private function getCommandHelp(): string

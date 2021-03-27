@@ -1,6 +1,6 @@
 {
     "name": "libreriacinco",
     "require": {
-        "vendor73": "5.2.*"
+        "vendortres": "5.2.*"
     }
 }

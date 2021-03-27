@@ -23,7 +23,7 @@ class RepoTest extends KernelTestCase
 
     public function testExists()
     {
-        $finalPath = $this->path_repositories . 'project1';
+        $finalPath = $this->path_repositories . 'esteesbueno';
         $repo = Repo::fromPrimitives($finalPath);
 
         $this->assertEquals($finalPath, $repo->path());

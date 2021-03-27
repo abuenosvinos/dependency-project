@@ -1,8 +1,8 @@
 {
     "name": "proyectouno",
     "require": {
-        "library1": "5.2.*",
-        "library3": "5.2.*",
-        "vendor3": "5.2.*"
+        "libreriauno": "5.2.*",
+        "libreriatres": "5.2.*",
+        "vendorcatorce": "5.2.*"
     }
 }
