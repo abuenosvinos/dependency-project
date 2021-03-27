@@ -8,7 +8,7 @@ docker-compose up --build -d
 
 Instalation of dependencies
 ```
-docker run --rm -v $(pwd):/app -w /app  dependencyproject_php80 composer install
+docker exec -w /app  dependencyproject_php80 composer install
 ```
 
 Creation of tables
