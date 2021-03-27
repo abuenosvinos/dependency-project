@@ -5,7 +5,6 @@ namespace App\Infrastructure\UI\Command;
 use App\Domain\Entity\Project;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -63,7 +62,6 @@ class ShowCommand extends Command
     {
         /** @var Project $project */
         foreach ($projects as $project) {
-            //$this->io->section()
             $this->io->section(sprintf('Dependencias del proyecto: %s:%s', $project->name(), $project->version()));
 
             $this->printLevels($level);
@@ -84,7 +82,7 @@ class ShowCommand extends Command
         /** @var Project $project */
         foreach ($projects as $project) {
             $this->printLevels($level);
-            $this->io->writeln($project->name());
+            $this->io->writeln(sprintf(' %s:%s', $project->name(), $project->version()));
             if ($project->sons()->count() > 0) {
                 $this->printSons($project->sons(), $level + 1);
             }

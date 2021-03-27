@@ -2,7 +2,6 @@
 
 namespace App\Infrastructure\UI\Command;
 
-use App\Domain\Entity\Composer;
 use App\Domain\Entity\Repo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -65,6 +64,8 @@ class BuildCommand extends Command
         }
 
         $this->commandBus->dispatch(new \App\Application\Build\BuildCommand($listRepos));
+
+        $this->io->success('Se ha generado la estructura de dependencias');
 
         return Command::SUCCESS;
     }

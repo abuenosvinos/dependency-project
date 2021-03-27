@@ -50,12 +50,7 @@ class Project extends AggregateRoot
     {
         return $this->sons;
     }
-/*
-    public function addSon(Project $son): void
-    {
-        $this->sons[] = $son;
-    }
-*/
+
     public function parents(): Collection
     {
         return $this->parents;

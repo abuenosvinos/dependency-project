@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\UI\Command;
 
+use App\Domain\Entity\Project;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,7 +14,7 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class DependenciesCommand extends Command
 {
-    protected static $defaultName = 'app:show';
+    protected static $defaultName = 'app:dependencies';
 
     private MessageBusInterface $queryBus;
 
@@ -52,7 +53,22 @@ class DependenciesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->queryBus->dispatch(new \App\Application\Dependencies\DependenciesQuery());
+        $project = $input->getArgument('project');
+
+        $projects = $this->processEnvelope($this->queryBus->dispatch(new \App\Application\Dependencies\DependenciesQuery($project)));
+
+        $this->io->section(sprintf('Proyectos a actualizar a partir del cambio del proyecto %s', $project));
+
+        if (count($projects) > 0) {
+            /** @var Project $project */
+            foreach ($projects as $project) {
+                $this->io->writeln(sprintf('- %s:%s', $project->name(), $project->version()));
+            }
+
+        } else {
+            $this->io->writeln('No hay ningún proyecto a actualizar');
+
+        }
 
         return Command::SUCCESS;
     }
