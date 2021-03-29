@@ -18,11 +18,11 @@ final class DoctrineProjectRepository extends DoctrineRepository implements Proj
         try {
             $this->persist($project);
         } catch (UniqueConstraintViolationException $e) {
-            if (strpos($e->getMessage(), 'for key \'PRIMARY\'') !== false) {
+            if (str_contains($e->getMessage(), 'for key \'PRIMARY\'')) {
                 throw new DuplicateProjectIdException($project->id());
-            } else if (strpos($e->getMessage(), 'project_path_idx') !== false) {
+            } else if (str_contains($e->getMessage(), 'project_path_idx')) {
                 throw new DuplicateProjectPathException($project->path());
-            } else if (strpos($e->getMessage(), 'project_name_version_idx') !== false) {
+            } else if (str_contains($e->getMessage(), 'project_name_version_idx')) {
                 throw new DuplicateProjectNameAndVersionException($project->name(), $project->version());
             }
         }
