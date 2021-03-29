@@ -59,6 +59,6 @@ class ComposerTest extends KernelTestCase
 
         $finalPath = $this->path_repositories . 'project3';
 
-        $composer = Composer::fromPath($finalPath);
+        Composer::fromPath($finalPath);
     }
 }

@@ -34,6 +34,6 @@ class RepoTest extends KernelTestCase
         $this->expectException(RepoNotExistsException::class);
 
         $finalPath = $this->path_repositories . 'noexisto';
-        $repo = Repo::fromPrimitives($finalPath);
+        Repo::fromPrimitives($finalPath);
     }
 }

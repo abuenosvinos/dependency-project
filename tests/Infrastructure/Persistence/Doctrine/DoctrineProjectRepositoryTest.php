@@ -5,8 +5,8 @@ namespace App\Tests\Infrastructure\Persistence\Doctrine;
 use App\Domain\DuplicateProjectIdException;
 use App\Domain\DuplicateProjectNameAndVersionException;
 use App\Domain\DuplicateProjectPathException;
-use App\Domain\Entity\Project;
 use App\Infrastructure\Persistence\Doctrine\DoctrineProjectRepository;
+use App\Tests\Shared\Domain\ProjectMother;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class DoctrineProjectRepositoryTest extends KernelTestCase
@@ -32,16 +32,16 @@ class DoctrineProjectRepositoryTest extends KernelTestCase
         $projectRepository->reset();
 
         $data = [
-            ['id1','path1','name1','3.*', []],
-            ['id2','path2','name2','8.1', []],
-            ['id3','path3','name3','6', ['name1']],
-            ['id4','path4','name4','^2.8', ['name1','name2']],
-            ['id5','path5','name5','5.2.*', ['name3','name4']],
+            ['project' => ProjectMother::create(id: 'id1', path: 'path1', name: 'name1', version: '3.*'), 'dependencies' => []],
+            ['project' => ProjectMother::create(name: 'name2'), 'dependencies' => []],
+            ['project' => ProjectMother::create(name: 'name3'), 'dependencies' => ['name1']],
+            ['project' => ProjectMother::create(name: 'name4'), 'dependencies' => ['name1','name2']],
+            ['project' => ProjectMother::create(name: 'name5'), 'dependencies' => ['name3','name4']],
         ];
 
         foreach ($data as $item) {
-            $project = Project::fromPrimitives($item[0], $item[1], $item[2], $item[3]);
-            foreach ($item[4] as $son) {
+            $project = $item['project'];
+            foreach ($item['dependencies'] as $son) {
                 $projectSon = $projectRepository->findByName($son);
                 $project->sons()->add($projectSon);
                 $projectSon->parents()->add($project);
@@ -85,13 +85,12 @@ class DoctrineProjectRepositoryTest extends KernelTestCase
         $projectRepository->reset();
 
         $data = [
-            ['id1','path1','name1','3.*', []],
-            ['id1','path1','name2','8.1', []]
+            ['project' => ProjectMother::create(id: 'id1')],
+            ['project' => ProjectMother::create(id: 'id1')],
         ];
 
         foreach ($data as $item) {
-            $project = Project::fromPrimitives($item[0], $item[1], $item[2], $item[3]);
-            $projectRepository->save($project);
+            $projectRepository->save($item['project']);
         }
     }
 
@@ -104,16 +103,14 @@ class DoctrineProjectRepositoryTest extends KernelTestCase
         $projectRepository->reset();
 
         $data = [
-            ['id1','path1','name1','3.*', []],
-            ['id2','path1','name2','8.1', []]
+            ['project' => ProjectMother::create(path: 'path1')],
+            ['project' => ProjectMother::create(path: 'path1')],
         ];
 
         foreach ($data as $item) {
-            $project = Project::fromPrimitives($item[0], $item[1], $item[2], $item[3]);
-            $projectRepository->save($project);
+            $projectRepository->save($item['project']);
         }
     }
-
 
     public function testDuplicateNameAndVersion()
     {
@@ -124,13 +121,12 @@ class DoctrineProjectRepositoryTest extends KernelTestCase
         $projectRepository->reset();
 
         $data = [
-            ['id1','path1','name1','3.*', []],
-            ['id2','path2','name1','3.*', []]
+            ['project' => ProjectMother::create(name: 'name1', version: '3.*')],
+            ['project' => ProjectMother::create(name: 'name1', version: '3.*')],
         ];
 
         foreach ($data as $item) {
-            $project = Project::fromPrimitives($item[0], $item[1], $item[2], $item[3]);
-            $projectRepository->save($project);
+            $projectRepository->save($item['project']);
         }
     }
 }
