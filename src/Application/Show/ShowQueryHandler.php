@@ -3,9 +3,9 @@
 namespace App\Application\Show;
 
 use App\Domain\ProjectRepository;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use App\Shared\Domain\Bus\Query\QueryHandler;
 
-final class ShowQueryHandler implements MessageHandlerInterface
+final class ShowQueryHandler implements QueryHandler
 {
     private ProjectRepository $projectRepository;
 

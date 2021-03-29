@@ -3,27 +3,25 @@
 namespace App\Infrastructure\UI\Command;
 
 use App\Domain\Entity\Project;
+use App\Shared\Domain\Bus\Query\QueryBus;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Messenger\Envelope;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class ShowCommand extends Command
 {
     protected static $defaultName = 'app:show';
 
-    private MessageBusInterface $queryBus;
+    private QueryBus $queryBus;
 
     /**
      * @var SymfonyStyle
      */
     private $io;
 
-    public function __construct(MessageBusInterface $queryBus)
+    public function __construct(QueryBus $queryBus)
     {
         parent::__construct();
 
@@ -52,7 +50,7 @@ class ShowCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $projects = $this->processEnvelope($this->queryBus->dispatch(new \App\Application\Show\ShowQuery()));
+        $projects = $this->queryBus->ask(new \App\Application\Show\ShowQuery());
         $this->printProjects($projects, 0);
 
         return Command::SUCCESS;
@@ -94,14 +92,6 @@ class ShowCommand extends Command
         for ($i=0; $i<$level; $i++) {
             $this->io->write('-');
         }
-    }
-
-    // TODO; Habría que Encapsular el symfony/messenger con clases propias
-    private function processEnvelope(Envelope $envelope)
-    {
-        /** @var HandledStamp $stamp */
-        $stamp = $envelope->last(HandledStamp::class);
-        return $stamp->getResult();
     }
 
     private function getCommandHelp(): string

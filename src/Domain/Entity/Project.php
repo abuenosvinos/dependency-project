@@ -4,6 +4,7 @@
 namespace App\Domain\Entity;
 
 
+use App\Shared\Domain\Entity\AggregateRoot;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 

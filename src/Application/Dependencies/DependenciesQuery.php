@@ -2,12 +2,16 @@
 
 namespace App\Application\Dependencies;
 
-final class DependenciesQuery
+use App\Shared\Domain\Bus\Query\Query;
+
+final class DependenciesQuery extends Query
 {
     private string $project;
 
     public function __construct(string $project)
     {
+        parent::__construct();
+
         $this->project = $project;
     }
 

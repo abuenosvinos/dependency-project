@@ -2,6 +2,8 @@
 
 namespace App\Application\Show;
 
-final class ShowQuery
+use App\Shared\Domain\Bus\Query\Query;
+
+final class ShowQuery extends Query
 {
 }

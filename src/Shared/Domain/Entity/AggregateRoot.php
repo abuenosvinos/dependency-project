@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Entity;
+namespace App\Shared\Domain\Entity;
 
 abstract class AggregateRoot
 {

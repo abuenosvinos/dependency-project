@@ -2,12 +2,16 @@
 
 namespace App\Application\Build;
 
-final class BuildCommand
+use App\Shared\Domain\Bus\Command\Command;
+
+final class BuildCommand extends Command
 {
     private array $repos;
 
     public function __construct(array $repos)
     {
+        parent::__construct();
+
         $this->repos = $repos;
     }
 

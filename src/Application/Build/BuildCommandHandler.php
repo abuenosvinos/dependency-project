@@ -5,9 +5,9 @@ namespace App\Application\Build;
 use App\Domain\Entity\Project;
 use App\Domain\Entity\Repo;
 use App\Domain\ProjectRepository;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use App\Shared\Domain\Bus\Command\CommandHandler;
 
-final class BuildCommandHandler implements MessageHandlerInterface
+final class BuildCommandHandler implements CommandHandler
 {
     private ProjectRepository $projectRepository;
 

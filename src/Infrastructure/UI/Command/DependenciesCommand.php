@@ -3,27 +3,25 @@
 namespace App\Infrastructure\UI\Command;
 
 use App\Domain\Entity\Project;
+use App\Shared\Domain\Bus\Query\QueryBus;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Messenger\Envelope;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class DependenciesCommand extends Command
 {
     protected static $defaultName = 'app:dependencies';
 
-    private MessageBusInterface $queryBus;
+    private QueryBus $queryBus;
 
     /**
      * @var SymfonyStyle
      */
     private $io;
 
-    public function __construct(MessageBusInterface $queryBus)
+    public function __construct(QueryBus $queryBus)
     {
         parent::__construct();
 
@@ -55,7 +53,7 @@ class DependenciesCommand extends Command
     {
         $project = $input->getArgument('project');
 
-        $projects = $this->processEnvelope($this->queryBus->dispatch(new \App\Application\Dependencies\DependenciesQuery($project)));
+        $projects = $this->queryBus->ask(new \App\Application\Dependencies\DependenciesQuery($project));
 
         $this->io->section(sprintf('Proyectos a actualizar a partir del cambio del proyecto %s', $project));
 
@@ -71,14 +69,6 @@ class DependenciesCommand extends Command
         }
 
         return Command::SUCCESS;
-    }
-
-    // TODO; Habría que Encapsular el symfony/messenger con clases propias
-    private function processEnvelope(Envelope $envelope)
-    {
-        /** @var HandledStamp $stamp */
-        $stamp = $envelope->last(HandledStamp::class);
-        return $stamp->getResult();
     }
 
     private function getCommandHelp(): string

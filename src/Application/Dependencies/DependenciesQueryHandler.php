@@ -5,9 +5,9 @@ namespace App\Application\Dependencies;
 use App\Domain\Entity\Project;
 use App\Domain\ProjectNotExistsException;
 use App\Domain\ProjectRepository;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use App\Shared\Domain\Bus\Query\QueryHandler;
 
-final class DependenciesQueryHandler implements MessageHandlerInterface
+final class DependenciesQueryHandler implements QueryHandler
 {
     private ProjectRepository $projectRepository;
 
