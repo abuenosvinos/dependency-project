@@ -6,8 +6,6 @@ use App\Domain\ComposerNotExistsException;
 use App\Domain\ComposerNotHasNameException;
 use App\Domain\ComposerNotValidJsonException;
 use App\Domain\Entity\Composer;
-use App\Domain\Entity\Repo;
-use App\Domain\RepoNotExistsException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ComposerTest extends KernelTestCase

@@ -10,7 +10,7 @@ interface ProjectRepository
 {
     public function save(Project $project): void;
 
-    public function findByName(string $name): Project;
+    public function findByName(string $name): ?Project;
 
     public function searchAll(): array;
 

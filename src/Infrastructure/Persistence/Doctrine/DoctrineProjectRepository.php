@@ -28,7 +28,7 @@ final class DoctrineProjectRepository extends DoctrineRepository implements Proj
         }
     }
 
-    public function findByName(string $name): Project
+    public function findByName(string $name): ?Project
     {
         return $this->repository(Project::class)->findOneByName($name);
     }

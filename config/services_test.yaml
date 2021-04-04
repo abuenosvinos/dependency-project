@@ -5,3 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     path_repositories: '%kernel.project_dir%/tests/repositories/bad/'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Domain\ProjectRepository:
+        class: App\Infrastructure\Persistence\InMemory\InMemoryProjectRepository

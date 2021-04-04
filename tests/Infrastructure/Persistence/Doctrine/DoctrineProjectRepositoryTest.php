@@ -5,6 +5,7 @@ namespace App\Tests\Infrastructure\Persistence\Doctrine;
 use App\Domain\DuplicateProjectIdException;
 use App\Domain\DuplicateProjectNameAndVersionException;
 use App\Domain\DuplicateProjectPathException;
+use App\Domain\Entity\Project;
 use App\Infrastructure\Persistence\Doctrine\DoctrineProjectRepository;
 use App\Tests\Shared\Domain\ProjectMother;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -40,11 +41,11 @@ class DoctrineProjectRepositoryTest extends KernelTestCase
         ];
 
         foreach ($data as $item) {
+            /** @var Project $project */
             $project = $item['project'];
             foreach ($item['dependencies'] as $son) {
                 $projectSon = $projectRepository->findByName($son);
-                $project->sons()->add($projectSon);
-                $projectSon->parents()->add($project);
+                $project->addSon($projectSon);
             }
             $projectRepository->save($project);
         }

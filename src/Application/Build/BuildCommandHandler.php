@@ -40,7 +40,7 @@ final class BuildCommandHandler implements CommandHandler
                 if (in_array($name, array_values($validNames))) {
                     $projectParent = $validProjects[$repo->composer()->name()];
                     $projectSon = $validProjects[$name];
-                    $projectParent->sons()->add($projectSon);
+                    $projectParent->addSon($projectSon);
                 }
             }
         }

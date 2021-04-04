@@ -47,6 +47,12 @@ class Project extends AggregateRoot
         return $this->version;
     }
 
+    public function addSon(Project $project): void
+    {
+        $this->sons()->add($project);
+        $project->parents()->add($this);
+    }
+
     public function sons(): Collection
     {
         return $this->sons;
